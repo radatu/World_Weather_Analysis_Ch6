@@ -1,0 +1,37 @@
+To read in data from a database created from 5 tables of data joined on country, you can follow these steps in a Jupyter Notebook:
+
+Import the required libraries:
+python
+Copy code
+import pandas as pd
+import sqlalchemy
+from sqlalchemy import create_engine
+Create a database engine:
+python
+Copy code
+db_username = 'your_username'
+db_password = 'your_password'
+db_endpoint = 'your_db_endpoint'
+db_name = 'your_db_name'
+engine = create_engine(f'postgresql://{db_username}:{db_password}@{db_endpoint}/{db_name}')
+Read in the data from the database using a SQL query:
+python
+Copy code
+query = """
+SELECT *
+FROM table1 t1
+JOIN table2 t2 ON t1.country = t2.country
+JOIN table3 t3 ON t2.country = t3.country
+JOIN table4 t4 ON t3.country = t4.country
+JOIN table5 t5 ON t4.country = t5.country
+"""
+data = pd.read_sql(query, engine)
+Check the data:
+python
+Copy code
+data.head()
+Note that you need to replace 'your_username', 'your_password', 'your_db_endpoint', and 'your_db_name' with the actual values. Also, you need to replace 'table1', 'table2', 'table3', 'table4', and 'table5' with the actual names of the tables you want to join on the 'country' column.
+
+
+
+
